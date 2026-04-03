@@ -1,0 +1,26 @@
+version: "3"
+
+services: 
+  api:
+    build: ./app
+    depends_on:
+      - db
+    ports:
+      - "4000:3000"
+    networks:
+      - backend
+  
+  db:
+    image: postgres
+    env_file:
+      - .env
+    networks:
+      - backend
+
+  pg_worker:
+    build: ./pg_worker
+    networks:
+      - backend
+
+networks:
+  backend:
